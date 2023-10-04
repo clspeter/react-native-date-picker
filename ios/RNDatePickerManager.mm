@@ -110,7 +110,10 @@ RCT_EXPORT_METHOD(openPicker:(NSDictionary *) props
         [picker setDatePickerMode:mode];
         
         NSLocale * locale = [RCTConvert NSLocale:[props objectForKey:@"locale"]];
-        if(locale) [picker setLocale:locale];
+        if(locale){ 
+            [picker setLocale:locale];
+            [picker setCalendar:[NSCalendar calendarWithIdentifier:NSCalendarIdentifierRepublicOfChina]];
+        }
 
         int minuteInterval = [RCTConvert int:[props objectForKey:@"minuteInterval"]];
         [picker setMinuteInterval:minuteInterval];
