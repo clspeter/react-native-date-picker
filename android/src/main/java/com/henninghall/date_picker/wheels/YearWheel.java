@@ -10,15 +10,14 @@ import com.henninghall.date_picker.models.Mode;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class YearWheel extends Wheel
-{
+public class YearWheel extends Wheel {
     private int defaultStartYear;
     private int defaultEndYear;
 
     public YearWheel(final Picker picker, final State id) {
         super(picker, id);
-        this.defaultStartYear = 1900;
-        this.defaultEndYear = 2100;
+        this.defaultStartYear = 1;
+        this.defaultEndYear = 200;
     }
 
     @Override
@@ -44,14 +43,14 @@ public class YearWheel extends Wheel
         if (state.getMaximumDate() == null) {
             return this.defaultEndYear;
         }
-        return state.getMaximumDate().get(Calendar.YEAR);
+        return state.getMaximumDate().get(Calendar.YEAR) - 1911;
     }
 
     private int getStartYear() {
         if (state.getMinimumDate() == null) {
             return this.defaultStartYear;
         }
-        return state.getMinimumDate().get(Calendar.YEAR);
+        return state.getMinimumDate().get(Calendar.YEAR) - 1911;
     }
 
     @Override
@@ -75,4 +74,3 @@ public class YearWheel extends Wheel
     }
 
 }
-

@@ -132,7 +132,7 @@ public class Formats {
         put("zh", mapOf("M月d日EEE", "d日", "y年"));
         put("zh_CN", mapOf("M月d日EEE", "d日", "y年"));
         put("zh_HK", mapOf("M月d日EEE", "d日", "y年"));
-        put("zh_TW", mapOf("M月d日 EEE", "d日", "y年"));
+        put("zh_TW", mapOf("M月d日 EEE", "d日", "民國y年"));
         put("zu", mapOf("EEE, MMM d", "d", "y"));
         put("en_ISO", mapOf("EEE, MMM d", "d", "y"));
         put("en_MY", mapOf("EEE, d MMM", "d", "y"));

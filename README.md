@@ -1,4 +1,4 @@
-# React Native Date Picker [![npm](https://img.shields.io/npm/v/react-native-date-picker.svg)](https://www.npmjs.com/package/react-native-date-picker) [![Build status](https://img.shields.io/github/actions/workflow/status/henninghall/react-native-date-picker/unit-tests.yml?branch=master&label=tests)](https://github.com/henninghall/react-native-date-picker/actions) [![npm](https://img.shields.io/npm/dm/react-native-date-picker.svg)](https://www.npmjs.com/package/react-native-date-picker)
+# React Native Date Picker RepublicEra [![npm](https://img.shields.io/npm/v/react-native-date-picker.svg)](https://www.npmjs.com/package/react-native-date-picker) [![Build status](https://img.shields.io/github/actions/workflow/status/henninghall/react-native-date-picker/unit-tests.yml?branch=master&label=tests)](https://github.com/henninghall/react-native-date-picker/actions) [![npm](https://img.shields.io/npm/dm/react-native-date-picker.svg)](https://www.npmjs.com/package/react-native-date-picker)
 
 This is a React Native Date Picker with following main features:
 
@@ -7,6 +7,15 @@ This is a React Native Date Picker with following main features:
 🌍&nbsp; Various languages<br>
 🎨&nbsp; Customizable<br>
 🖼&nbsp; Modal or Inlined<br>
+
+### 年份顯示更改為民國年
+
+更改 mode="date" 為顯示民國年，以下描述只限定 date，datetime理論上無影響
+
+- iOS 寫死使用內建的民國Locale
+- Androi對字串的年份做處裡，使用zh_tw 會得到民國xxx年
+- 無論任何語言，顯示年份的數值都是民國年
+
 
 ## Modal
 

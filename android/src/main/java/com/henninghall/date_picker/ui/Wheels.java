@@ -123,6 +123,8 @@ public class Wheels {
             Wheel w = wheels.get(i);
             if (w instanceof DateWheel) {
                 sb.append(w.getPastValue(daysToSubtract));
+            } else if (w instanceof YearWheel) {
+                sb.append(w.getYearValue());
             }
             else sb.append(w.getValue());
         }

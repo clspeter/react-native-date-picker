@@ -11,6 +11,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public abstract class Wheel {
 
@@ -44,6 +46,31 @@ public abstract class Wheel {
         return values.indexOf(format.format(date.getTime()));
     }
 
+    // 滾動到民國年
+    private int getIndexOfYear(Calendar date) {
+        format.setTimeZone(state.getTimeZone());
+        String formattedDate = format.format(date.getTime());
+
+        // 使用正則表達式來分離年份
+        Pattern pattern = Pattern.compile("(\\d+)");
+        Matcher matcher = pattern.matcher(formattedDate);
+
+        if (matcher.find()) {
+            String yearString = matcher.group(1);
+            try {
+                int year = Integer.parseInt(yearString) - 1911;
+                String newFormattedDate = formattedDate.replace(yearString, String.valueOf(year));
+                return values.indexOf(newFormattedDate);
+            } catch (NumberFormatException e) {
+                // 處理轉換失敗
+                return -1;
+            }
+        } else {
+            // 沒有找到數字年份
+            return -1;
+        }
+    }
+
     public void animateToDate(Calendar date) {
         picker.smoothScrollToValue(getIndexOfDate(date));
     }
@@ -51,6 +78,35 @@ public abstract class Wheel {
     public String getValue() {
         if(!visible()) return format.format(userSetValue.getTime());
         return getValueAtIndex(getIndex());
+    }
+
+    // 民國轉西元
+    public String getYearValue() {
+        if (!visible()) {return format.format(userSetValue.getTime());}
+
+        String originalValue = getValueAtIndex(getIndex());
+
+        // 使用正則表達式来分離（非必要）前缀、数字和（非必要）后缀
+        Pattern pattern = Pattern.compile("([^\\d]*)(\\d+)([^\\d]*)");
+        Matcher matcher = pattern.matcher(originalValue);
+
+        if (matcher.find()) {
+            String prefix = matcher.group(1) != null ? matcher.group(1) : "";
+            String yearString = matcher.group(2);
+            String suffix = matcher.group(3) != null ? matcher.group(3) : "";
+
+            try {
+                int year = Integer.parseInt(yearString);
+                year += 1911;
+
+                // 将（非必要）前缀、加過1911的年份和（非必要）后缀接回来
+                return prefix + year + suffix;
+            } catch (NumberFormatException e) {
+                return originalValue;
+            }
+        } else {
+            return originalValue;
+        }
     }
 
     public String getPastValue(int subtractIndex) {
@@ -73,7 +129,8 @@ public abstract class Wheel {
         format.setTimeZone(state.getTimeZone());
         this.userSetValue = date;
         int index = getIndexOfDate(date);
-
+        if (this instanceof YearWheel)
+            index = getIndexOfYear(date);
         if(index > -1) {
             // Set value directly during initializing. After init, always smooth scroll to value
             if(picker.getValue() == 0) picker.setValue(index);
